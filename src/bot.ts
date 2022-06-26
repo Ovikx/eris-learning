@@ -17,9 +17,6 @@ bot.on('ready', async () => {
     console.log(`Logged in as ${String(bot.user)}`);
     const commands = await bot.getGuildCommands(guildID);
     
-
-    console.log('adding commands');
-    console.log(commands);
     await bot.bulkEditGuildCommands(
         guildID ?? '',
         [
@@ -47,7 +44,6 @@ bot.on('ready', async () => {
             }
         ]
     );
-    console.log(commands);
     
 });
 

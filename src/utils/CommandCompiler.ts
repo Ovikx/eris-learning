@@ -1,32 +1,18 @@
 import Eris from "eris";
+import { Import } from "../interfaces";
 const fs = require('fs');
 
-interface Import {
-    filename: string,
-    import: any
-}
+
 
 const dir = `${__dirname}/../commands/`;
 let imports: Import[] = [];
+const files = fs.readdirSync(dir);
 
-const files = fs.readdir(
-    dir,
-    (err, files) => {
-        if (err) {
-            return console.log('Unable to scan directory: ' + err);
-        }
-        files.forEach(file => {
-            imports.push(
-                {
-                    filename: file,
-                    import: require(`${dir}/${file}`)
-                }
-            )
-            console.log(imports);
-        })
-        module.exports.commands = imports;
-    }
-)
+files.forEach((file: string) => {
+    imports.push({
+        filename: file,
+        import: require(`${dir}/${file}`)
+    })
+});
 
-//console.log(imports);
-//module.exports.exports = imports;
+module.exports.exports = imports;
