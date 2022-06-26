@@ -9,7 +9,9 @@ const guildID: string = process.env.TESTING_GUILD_ID ?? '';
 const bot: Eris.Client = new Eris.Client(token, {
     intents: [],
     messageLimit: 100
-})
+});
+
+module.exports.bot = bot;
 
 bot.on('ready', async () => {
     console.log(`Logged in as ${String(bot.user)}`);
@@ -37,7 +39,6 @@ bot.on('ready', async () => {
                         description: 'how many times the string should be repeated',
                         type: Eris.Constants.ApplicationCommandOptionTypes.INTEGER,
                         required: true,
-                        autocomplete: true,
                         min_value: 1,
                         max_value: 100
 
@@ -58,7 +59,7 @@ bot.on("interactionCreate", (interaction) => {
     if(interaction instanceof Eris.CommandInteraction) {
         switch(interaction.data.name) {
             case 'print_repeat':
-                let arr = [];
+                let arr: string[] = [];
                 for (let i = 0; i < (interaction.data.options![1] as any).value; i++) {
                     arr.push((interaction.data.options![0] as any).value);
                 }
