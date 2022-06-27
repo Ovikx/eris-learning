@@ -1,5 +1,3 @@
-import Eris from "eris";
-import { Import } from "./types";
 const fs = require('fs');
 
 const dir = `${__dirname}/../events/`;

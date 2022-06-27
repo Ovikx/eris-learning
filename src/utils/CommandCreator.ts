@@ -1,5 +1,5 @@
 import Eris from "eris";
-import { SlashCommand, Import } from "./types";
+import { Import } from "./types";
 
 const bot: Eris.Client = require('../core/bot');
 const cmds: Import[] = require('./CommandCompiler');

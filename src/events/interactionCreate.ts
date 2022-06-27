@@ -3,8 +3,6 @@ import { Import } from "../utils/types";
 import CommandCreator from "../utils/CommandCreator";
 
 const bot: Eris.Client = require('../core/bot');
-
-const GLOBAL = false;
 const commandCreator = new CommandCreator();
 const commands = commandCreator.getCommands();
 
