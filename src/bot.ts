@@ -11,9 +11,9 @@ const bot: Eris.Client = new Eris.Client(token, {
     messageLimit: 100
 });
 
-module.exports.bot = bot;
+module.exports = bot;
 
-bot.on('ready', async () => {
+/* bot.on('ready', async () => {
     console.log(`Logged in as ${String(bot.user)}`);
     const commands = await bot.getGuildCommands(guildID);
     
@@ -72,4 +72,4 @@ bot.on("interactionCreate", (interaction) => {
     }
 });
 
-bot.connect();
+bot.connect(); */
