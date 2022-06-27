@@ -5,10 +5,6 @@ export interface SlashCommand {
     action: Function
 }
 
-export interface ImportCompliation {
-    exports: Import[]
-}
-
 export interface Import {
     filename: string,
     import: SlashCommand

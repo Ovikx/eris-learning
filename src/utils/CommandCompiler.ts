@@ -13,4 +13,4 @@ files.forEach((file: string) => {
     })
 });
 
-module.exports.exports = imports;
+module.exports = imports;
