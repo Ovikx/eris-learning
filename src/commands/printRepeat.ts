@@ -1,6 +1,6 @@
 import Eris from "eris";
-import { SlashCommand } from "../interfaces";
-const bot: Eris.Client = require('../bot');
+import { SlashCommand } from "../utils/interfaces";
+const bot: Eris.Client = require('../core/bot');
 
 module.exports = {
     config: {

@@ -1,8 +1,8 @@
 import Eris from "eris";
-import { Import } from "../interfaces";
+import { Import } from "../utils/interfaces";
 import CommandCreator from "../utils/CommandCreator";
 
-const bot: Eris.Client = require('../bot');
+const bot: Eris.Client = require('../core/bot');
 
 const GLOBAL = false;
 const commandCreator = new CommandCreator();

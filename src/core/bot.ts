@@ -1,6 +1,6 @@
 import Eris from 'eris';
 //const Eris = require('eris');
-import { sleep } from './utils/essentials';
+import { sleep } from '../utils/essentials';
 const dotenv = require('dotenv');
 dotenv.config();
 

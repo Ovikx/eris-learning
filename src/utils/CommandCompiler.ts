@@ -1,5 +1,5 @@
 import Eris from "eris";
-import { Import } from "../interfaces";
+import { Import } from "./interfaces";
 const fs = require('fs');
 
 const dir = `${__dirname}/../commands/`;

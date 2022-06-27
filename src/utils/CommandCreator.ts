@@ -1,7 +1,7 @@
 import Eris from "eris";
-import { SlashCommand, Import } from "../interfaces";
+import { SlashCommand, Import } from "./interfaces";
 
-const bot: Eris.Client = require('../bot');
+const bot: Eris.Client = require('../core/bot');
 const cmds: Import[] = require('./CommandCompiler');
 
 export default class CommandCreator {
