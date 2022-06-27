@@ -34,5 +34,3 @@ module.exports = {
         interaction.createMessage(arr.join('\n'));
     }
 }
-
-//module.exports.printRepeat = printRepeat
