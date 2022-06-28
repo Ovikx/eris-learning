@@ -7,8 +7,8 @@ const commandCreator = new CommandCreator();
 const commands = commandCreator.getCommands();
 
 bot.on('interactionCreate', async (interaction) => {
-    console.log('command interaction received!');
     if (interaction instanceof Eris.CommandInteraction) {
+        console.log('command interaction received!');
         let matched = false;
         commands.every((cmd: Import) => {
             if (interaction.data.name == cmd.import.config.name) {
