@@ -1,5 +1,14 @@
 import Eris from "eris";
 
+async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
+    let arr: string[] = [];
+    for (let i = 0; i < (interaction.data.options![1] as any).value; i++) {
+        arr.push((interaction.data.options![0] as any).value);
+    }
+
+    interaction.createMessage(arr.join('\n'));
+}
+
 module.exports = {
     config: {
         name: 'printrepeat',
@@ -23,12 +32,5 @@ module.exports = {
             }
         ] as any[]
     },
-    action: async function (bot: Eris.Client, interaction: Eris.CommandInteraction) {
-        let arr: string[] = [];
-        for (let i = 0; i < (interaction.data.options![1] as any).value; i++) {
-            arr.push((interaction.data.options![0] as any).value);
-        }
-
-        interaction.createMessage(arr.join('\n'));
-    }
+    action: command
 }
