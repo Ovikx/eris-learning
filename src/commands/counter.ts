@@ -29,7 +29,7 @@ async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
         components: components
     });
 
-    async function countChange(buttonClick: any) {
+    async function countChange(buttonClick: Eris.Interaction) {
         if (buttonClick instanceof Eris.ComponentInteraction && buttonClick.message.id === msg.id) {
             state += buttonClick.data.custom_id === 'increase' ? 1 : -1;
             console.log('button called');
