@@ -1,5 +1,3 @@
-export async function sleep(time: number) {
-    console.log('start timer');
-    await (() => new Promise(resolve => setTimeout(resolve, time)))();
-    console.log('end timer');
+export async function sleep(ms: number) {
+    await (() => new Promise(resolve => setTimeout(resolve, ms)))();
 }
