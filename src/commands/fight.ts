@@ -14,7 +14,7 @@ class Player {
 }
 
 async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
-    let user = new Player(interaction.user?.username ?? 'Player');
+    let user = new Player(interaction.member?.username ?? 'Player');
     let enemy = new Player('Enemy');
     let ongoing = true;
 
@@ -39,7 +39,7 @@ async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
                 title: 'Fight!',
                 description: 'Just win bro',
                 author: {
-                    name: interaction.member?.username ?? '',
+                    name: user.name,
                     icon_url: interaction.member?.avatarURL
                 },
                 color: 0x3e43cf,
@@ -71,12 +71,12 @@ async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
                 color: 0x00ff00,
                 fields: [
                     {
-                        name: 'You',
+                        name: user.name,
                         value: String(user.health),
                         inline: true
                     },
                     {
-                        name: 'Enemy',
+                        name: enemy.name,
                         value: String(enemy.health),
                         inline: true
                     },
@@ -102,12 +102,12 @@ async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
                 color: 0xff0000,
                 fields: [
                     {
-                        name: 'You',
+                        name: user.name,
                         value: String(user.health),
                         inline: true
                     },
                     {
-                        name: 'Enemy',
+                        name: enemy.name,
                         value: String(enemy.health),
                         inline: true
                     },
@@ -122,7 +122,7 @@ async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
     }
 
     async function makeMove(attacker: Player, target: Player, buttonClick: Eris.ComponentInteraction) {
-        target.health -= Math.floor(20*randRange(1,1.5));
+        target.health -= Math.floor(50*randRange(1,1.5));
         const postMoveMsg = checkedEmbed(buttonClick);
         buttonClick.editParent({
             embeds: postMoveMsg.embeds,
