@@ -10,9 +10,9 @@ bot.on('interactionCreate', async (interaction) => {
     if (interaction instanceof Eris.CommandInteraction) {
         console.log('command interaction received!');
         let matched = false;
-        commands.every((cmd: Import) => {
+        commands.every(async (cmd: Import) => {
             if (interaction.data.name == cmd.import.config.name) {
-                cmd.import.action(bot, interaction);
+                await cmd.import.action(bot, interaction);
                 matched = true;
             }
             
