@@ -1,17 +1,23 @@
 import Eris, { Constants } from "eris";
-import { create } from "ts-node";
 import { randRange, sleep } from "../utils/essentials";
 
 class Player {
+    name: string;
     health: number;
-    constructor(health: number = 100) {
+    constructor(
+        name: string,
+        health: number = 100
+    ) {
+        this.name = name;
         this.health = health;
     }
 }
 
 async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
-    let user = new Player();
-    let enemy = new Player();
+    let user = new Player(interaction.user?.username ?? 'Player');
+    let enemy = new Player('Enemy');
+    let ongoing = true;
+
     let components = [
         {
             type: Constants.ComponentTypes.ACTION_ROW,
@@ -39,12 +45,12 @@ async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
                 color: 0x3e43cf,
                 fields: [
                     {
-                        name: 'You',
+                        name: user.name,
                         value: String(user.health),
                         inline: true
                     },
                     {
-                        name: 'Enemy',
+                        name: enemy.name,
                         value: String(enemy.health),
                         inline: true
                     }
@@ -115,6 +121,35 @@ async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
         ];
     }
 
+    async function makeMove(attacker: Player, target: Player, buttonClick: Eris.ComponentInteraction) {
+        target.health -= Math.floor(20*randRange(1,1.5));
+        const postMoveMsg = checkedEmbed(buttonClick);
+        buttonClick.editParent({
+            embeds: postMoveMsg.embeds,
+            components: postMoveMsg.components
+        });
+    }
+
+    function checkedEmbed(buttonClick: Eris.ComponentInteraction) {
+        let embed = ongoingEmbed();
+        let comps = components;
+
+        if (user.health <= 0) {
+            embed = loseEmbed();
+        }
+        if (enemy.health <= 0) {
+            embed = winEmbed();
+        }
+
+        if (user.health <= 0 || enemy.health <= 0) {
+            bot.removeListener('interactionCreate', onClick);
+            comps = [];
+            ongoing = false;
+        }
+
+        return {embeds: embed, components: comps};
+    }
+
     await interaction.acknowledge();
     const msg = await interaction.createFollowup({
         embeds: ongoingEmbed(),
@@ -125,55 +160,13 @@ async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
         if (buttonClick instanceof Eris.ComponentInteraction && buttonClick.message.id === msg.id) {
             
             components[0].components[0].disabled = true;
-            enemy.health -= Math.floor(20*randRange(1, 1.5));
-            if (enemy.health <= 0) {
-                await buttonClick.editParent({
-                    embeds: winEmbed(),
-                    components: []
-                });
-                bot.removeListener('interactionCreate', onClick);
-                return
+            await makeMove(user, enemy, buttonClick);
+            if (!ongoing) {
+                return;
             }
-            if (user.health <= 0) {
-                await buttonClick.editParent({
-                    embeds: loseEmbed(),
-                    components: []
-                });
-                bot.removeListener('interactionCreate', onClick);
-                return
-            }
-
-            await buttonClick.editParent({
-                embeds: ongoingEmbed(),
-                components: components
-            });
-
-            user.health -= Math.floor(20*randRange(1, 1.5));
-
             await sleep(1500);
             components[0].components[0].disabled = false;
-
-            if (enemy.health <= 0) {
-                await buttonClick.editParent({
-                    embeds: winEmbed(),
-                    components: []
-                });
-                bot.removeListener('interactionCreate', onClick);
-                return
-            }
-            if (user.health <= 0) {
-                await buttonClick.editParent({
-                    embeds: loseEmbed(),
-                    components: []
-                });
-                bot.removeListener('interactionCreate', onClick);
-                return
-            }
-
-            await buttonClick.editParent({
-                embeds: ongoingEmbed(),
-                components: components
-            });
+            await makeMove(enemy, user, buttonClick);
         }
     }
 

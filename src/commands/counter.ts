@@ -45,7 +45,6 @@ async function command(bot: Eris.Client, interaction: Eris.CommandInteraction) {
                 components: components
             });
         }
-        
     }
 
     bot.on('interactionCreate', countChange);
