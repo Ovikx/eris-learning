@@ -4,8 +4,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const uri: string = process.env.DB_URI ?? '';
-console.log(uri);
-
 
 class DB {
     client: MongoClient;
